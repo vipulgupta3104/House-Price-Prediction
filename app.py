@@ -27,26 +27,30 @@ def home():
 @app.route('/predict', methods=['POST'])
 def predict():
     # Extract data from form
-    features = [str(x) for x in request.form.values()]
-    bedr=int(features[0])
-    bathr=int(features[1])
-    floors=int(features[2])
-    year=int(features[3])
-    locat=features[4]
-    cond=features[5]
-    gar=features[6]
-    ar=int(features[7])
-    
-    num = scaler.transform([[ar]])
-    cat = oe.transform([[locat,cond,gar]])
-    
-    final_features = np.array([[bedr,bathr,floors,year,cat[0,0],cat[0,1],cat[0,2],num[0,0]]])
-    
-    # Make prediction
-    prediction = model.predict(final_features)
-    output = prediction[0]
+    try:
+        features = [str(x) for x in request.form.values()]
+        bedr=int(features[0])
+        bathr=int(features[1])
+        floors=int(features[2])
+        year=int(features[3])
+        locat=features[4]
+        cond=features[5]
+        gar=features[6]
+        ar=int(features[7])
+        
+        num = scaler.transform([[ar]])
+        cat = oe.transform([[locat,cond,gar]])
+        
+        final_features = np.array([[bedr,bathr,floors,year,cat[0,0],cat[0,1],cat[0,2],num[0,0]]])
+        
+        # Make prediction
+        prediction = model.predict(final_features)
+        output = prediction[0]
 
-    return render_template('index.html', prediction_text='Prediction: {}'.format(output))
+        return render_template('index.html', prediction_text='Prediction: {}'.format(output))
+    
+    except:
+        print("Error!! Enter Values Again.\n\n Possible Errors:\n1. Values entered are wrong.")
 
 if __name__ == "__main__":
     app.run(debug=True)
