@@ -45,12 +45,12 @@ def predict():
         
         # Make prediction
         prediction = model.predict(final_features)
-        output = prediction[0]
+        output = round(0.637*prediction[0],2)
 
-        return render_template('index.html', prediction_text='Prediction: {}'.format(output))
+        return render_template('index.html', prediction_text='Prediction: US${}'.format(output))
     
     except:
-        print("Error!! Enter Values Again.\n\n Possible Errors:\n1. Values entered are wrong.")
+        return render_template('index.html', prediction_text='Error!! Enter Values Again.\n\n Possible Errors:\n1. Values entered are wrong.')
 
 if __name__ == "__main__":
     app.run(debug=True)
