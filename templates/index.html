@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>House Price Prediction</title>
+<style>
+  body {
+    background: linear-gradient(135deg, #1e3c72, #caf0f8);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 100px;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #333;
+  }
+  
+  .form-container {
+    max-width: 550px;
+    width: 90%;
+    padding: 30px 40px;
+    border-radius: 16px;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+  }
+  
+  h2 {
+    color: #1e3c72;
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 25px;
+    font-weight: 600;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #2a5298;
+  }
+  
+  .form-container input {
+    width: 100%;
+    padding: 12px;
+    margin: 5px 0 20px 0;
+    display: inline-block;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    background-color: #f8f9fa;
+  }
+  
+  .form-container input:focus {
+    border-color: #1e3c72;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(30, 60, 114, 0.2);
+  }
+  
+  .form-container input[type="submit"] {
+    background: linear-gradient(to right, #1e3c72, #2a5298);
+    color: white;
+    border: none;
+    padding: 14px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 18px;
+    transition: all 0.3s ease;
+  }
+  
+  .form-container input[type="submit"]:hover {
+    background: linear-gradient(to right, #152b53, #1e3c72);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(30, 60, 114, 0.4);
+  }
+  
+  .result {
+    font-size: 1.6em;
+    color: #1e3c72;
+    text-align: center;
+    margin-top: 25px;
+    padding: 15px;
+    background-color: rgba(30, 60, 114, 0.1);
+    border-radius: 8px;
+    font-weight: 600;
+  }
+  
+  .dropdown {
+    padding: 12px;
+    width: 100%;
+    display: inline-block;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    appearance: none;
+    margin: 5px 0 20px 0;
+    font-size: 16px;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%232a5298" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+    padding-right: 40px;
+    transition: all 0.3s ease;
+  }
+  
+  .dropdown:focus {
+    border-color: #1e3c72;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(30, 60, 114, 0.2);
+  }
+  
+  .form-group {
+    position: relative;
+  }
+  
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+</style>
+</head>
+<body>
+<div class="form-container">
+  <h2>Predict House Price</h2>
+  <form action="/predict" method="post">
+    <label for="bedr">Number of bedrooms:</label>
+    <input placeholder="Example: 2" type="number" name="bedr" required>
+    
+    <label for="bathr">Number of bathrooms:</label>
+    <input placeholder="Example: 1.5" type="number" name="bathr" required>
+    
+    <label for="floors">Number of floors:</label>
+    <input placeholder="Example: 1" type="number" name="Floors" required>
+    
+    <label for="year">Year built:</label>
+    <input placeholder="Example: 2000" type="number" name="year" required>
+    
+    <label for="locat">Location of the house:</label>
+    <select class="dropdown" name="locat" required>
+      <option value="" disabled selected>Select location</option>
+      <option value="Downtown">Downtown</option>
+      <option value="Suburban">Suburban</option>
+      <option value="Urban">Urban</option>
+      <option value="Rural">Rural</option>
+    </select>
+    
+    <label for="cond">Condition of the house:</label>
+    <select class="dropdown" name="cond" required>
+      <option value="" disabled selected>Select condition</option>
+      <option value="Excellent">Excellent</option>
+      <option value="Good">Good</option>
+      <option value="Fair">Fair</option>
+      <option value="Poor">Poor</option>
+    </select>
+    
+    <label for="gar">Garage present:</label>
+    <select class="dropdown" name="gar" required>
+      <option value="" disabled selected>Select option</option>
+      <option value="Yes">Yes</option>
+      <option value="No">No</option>
+    </select>
+    
+    <label for="area">Area of the house (sq ft):</label>
+    <input placeholder="Example: 1500" type="number" name="area" required>
+    
+    <input type="submit" value="Predict Price">
+  </form>
+  {% if prediction_text %}
+  <div class="result">{{ prediction_text }}</div>
+  {% endif %}
+</div>
+</body>
+</html>
